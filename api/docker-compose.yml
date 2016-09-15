@@ -1,0 +1,21 @@
+version: "2"
+
+services:
+  api:
+    build: .
+    command: node_modules/.bin/nodemon -w src/ --debug=5858
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/home/app/src
+      - /home/app/src/node_modules
+    ports:
+      - "3030:3030"
+      - "5858:5858"
+    depends_on:
+      - db
+  db:
+    image: rethinkdb:2.3
+    ports:
+      - "8080:8080"
+      - "28015:28015"
